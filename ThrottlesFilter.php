@@ -41,6 +41,18 @@ class ThrottlesFilter extends CFilter
      * @var string
      */
     protected $ip;
+    
+    /**
+     * init
+     * 
+     * @return void
+     */
+    public function init()
+    {
+        parent::init();
+        $this->cache = Yii::app()->cache;
+        $this->ip = Yii::app()->request->userHostAddress;
+    }
 
     /**
      * preFilter
@@ -57,8 +69,6 @@ class ThrottlesFilter extends CFilter
             return false;
         }
 
-        $this->cache = Yii::app()->cache;
-        $this->ip = Yii::app()->request->userHostAddress;
         $cache = $this->cache;
         $ip = $this->ip;
         $now = time();
